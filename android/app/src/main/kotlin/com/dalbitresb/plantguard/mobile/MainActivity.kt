@@ -1,4 +1,4 @@
-package com.dalbitresb.plantguard_mobile
+package com.dalbitresb.plantguard.mobile
 
 import io.flutter.embedding.android.FlutterActivity
 
