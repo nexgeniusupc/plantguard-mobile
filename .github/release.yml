@@ -1,0 +1,14 @@
+changelog:
+  categories:
+    - title: Enhancements 🎉
+      labels:
+        - enhancement
+    - title: Bugs 🐛
+      labels:
+        - bug
+    - title: Docs 📖
+      labels:
+        - documentation
+    - title: Other Changes
+      labels:
+        - '*'
