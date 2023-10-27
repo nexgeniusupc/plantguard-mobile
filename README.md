@@ -1,6 +1,6 @@
-# plantguard_mobile
+# PlantGuard Mobile
 
-A new Flutter project.
+The mobile app for PlantGuard, an IoT plant water monitoring system, powered by Flutter.
 
 ## Getting Started
 
