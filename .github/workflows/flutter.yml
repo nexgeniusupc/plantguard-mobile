@@ -1,0 +1,55 @@
+name: Flutter
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: ${{ vars.JAVA_VERSION }}
+          cache: 'gradle'
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: ${{ vars.FLUTTER_CHANNEL }}
+          flutter-version: ${{ vars.FLUTTER_VERSION }}
+          cache: true
+      - name: Verify Flutter instalation
+        run: flutter doctor -v
+      - name: Fetch dependencies
+        run: flutter pub get
+      - name: Build release version
+        run: flutter build apk --release
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ vars.ARTIFACT_PREFIX }}
+          path: build/app/outputs/flutter-apk
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: ${{ vars.FLUTTER_CHANNEL }}
+          flutter-version: ${{ vars.FLUTTER_VERSION }}
+          cache: true
+      - name: Fetch dependencies
+        run: flutter pub get
+      - name: Run the Dart and Flutter analyzer
+        run: flutter analyze
+      - name: Ensure the Dart code is formatted correctly
+        run: flutter format --set-exit-if-changed --dry-run .
+      - name: Run unit tests
+        if: false
+        run: flutter test

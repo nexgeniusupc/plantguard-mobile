@@ -1,0 +1,29 @@
+name: PR Checks
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - edited
+
+jobs:
+  pr-title:
+    name: Title follows Conventional Commits rules
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: ${{ vars.FLUTTER_CHANNEL }}
+          flutter-version: ${{ vars.FLUTTER_VERSION }}
+          cache: true
+      - name: Fetch dependencies
+        run: flutter pub get
+      - name: Validate PR title
+        env:
+          VERBOSE: true
+        run: echo '${{ github.event.pull_request.title }}' | dart run commitlint_cli

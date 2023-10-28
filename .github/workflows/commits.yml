@@ -1,0 +1,33 @@
+name: Commits
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  conventional-commits:
+    name: Conventional Commits
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: ${{ vars.FLUTTER_CHANNEL }}
+          flutter-version: ${{ vars.FLUTTER_VERSION }}
+          cache: true
+      - name: Fetch dependencies
+        run: flutter pub get
+      - name: Validate push commits
+        if: github.event_name == 'push'
+        env:
+          VERBOSE: true
+        run: dart run commitlint_cli --from=${{ github.event.before }} --to=${{ github.event.after }}
+      - name: Validate PR Commits
+        if: github.event_name == 'pull_request'
+        env:
+          VERBOSE: true
+        run: dart run commitlint_cli --from=${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to=${{ github.event.pull_request.head.sha }}
