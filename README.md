@@ -11,3 +11,7 @@ dart run husky install
 ```
 
 It is recommended to use [VS Code](https://code.visualstudio.com/) as the IDE.
+
+## License
+
+[MIT](LICENSE)
