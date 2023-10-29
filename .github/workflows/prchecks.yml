@@ -24,6 +24,9 @@ jobs:
       - name: Fetch dependencies
         run: flutter pub get
       - name: Validate PR title
+        # Using an intermediate value prevents script injection attacks
+        # See: https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
         env:
+          TITLE: ${{ github.event.pull_request.title }}
           VERBOSE: true
-        run: echo '${{ github.event.pull_request.title }}' | dart run commitlint_cli
+        run: echo "$TITLE" | dart run commitlint_cli
