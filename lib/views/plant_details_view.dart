@@ -111,35 +111,6 @@ class _PlantDetailsViewState extends State<PlantDetailsView> {
           ),
         ),
       ),
-      bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        indicatorColor: Colors.blue[300],
-        selectedIndex: currentPageIndex,
-        destinations: const <Widget>[
-          NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.school),
-            icon: Icon(Icons.school_outlined),
-            label: 'Learn',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.history),
-            label: 'Activity',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
-      ),
     );
   }
 }
