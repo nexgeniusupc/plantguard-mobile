@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import '../services/auth/auth_service.dart';
 import 'app_card.dart';
+import 'auth/unauthenticated_view.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+  final AuthService _authService;
+
+  const HomeView(this._authService, {super.key});
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -15,7 +19,24 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
-        elevation: 1,
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await widget._authService.logout();
+              if (!mounted) return;
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UnauthenticatedView(
+                    widget._authService,
+                  ),
+                ),
+                (route) => false,
+              );
+            },
+            icon: const Icon(Icons.logout),
+          ),
+        ],
       ),
       body: const SingleChildScrollView(
         child: Padding(
