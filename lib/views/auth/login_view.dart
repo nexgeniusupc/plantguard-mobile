@@ -29,7 +29,7 @@ class _LoginViewState extends State<LoginView> {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => const HomeView(),
+          builder: (context) => HomeView(widget._authService),
         ),
         (route) => false,
       );
