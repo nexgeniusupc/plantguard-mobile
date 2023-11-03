@@ -33,7 +33,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
               AppCard(
-                icon: Icon(Icons.home),
+                icon: Icon(Icons.yard),
                 title: Text('Lavander'),
                 subtitle: Text('Healthy'),
               ),
@@ -49,12 +49,12 @@ class _HomeViewState extends State<HomeView> {
               Row(
                 children: [
                   AppCard(
-                    icon: Icon(Icons.home),
+                    icon: Icon(Icons.yard),
                     title: Text('Roses'),
                     subtitle: Text('Pending Water'),
                   ),
                   AppCard(
-                    icon: Icon(Icons.home),
+                    icon: Icon(Icons.yard),
                     title: Text('Lavatera'),
                     subtitle: Text('Healthy'),
                   ),
@@ -72,12 +72,12 @@ class _HomeViewState extends State<HomeView> {
               Row(
                 children: [
                   AppCard(
-                    icon: Icon(Icons.home),
+                    icon: Icon(Icons.yard),
                     title: Text('Lemongrass'),
                     subtitle: Text('Pending Water'),
                   ),
                   AppCard(
-                    icon: Icon(Icons.home),
+                    icon: Icon(Icons.yard),
                     title: Text('Roses'),
                     subtitle: Text('Water in 1 hour'),
                   ),
@@ -86,12 +86,12 @@ class _HomeViewState extends State<HomeView> {
               Row(
                 children: [
                   AppCard(
-                    icon: Icon(Icons.home),
+                    icon: Icon(Icons.yard),
                     title: Text('Strawberries'),
                     subtitle: Text('Needs Attention'),
                   ),
                   AppCard(
-                    icon: Icon(Icons.home),
+                    icon: Icon(Icons.yard),
                     title: Text('Tomatoes'),
                     subtitle: Text('Pending Water'),
                   ),
@@ -100,7 +100,7 @@ class _HomeViewState extends State<HomeView> {
               Row(
                 children: [
                   AppCard(
-                    icon: Icon(Icons.home),
+                    icon: Icon(Icons.yard),
                     title: Text('Lavander'),
                     subtitle: Text('Water in 30 min'),
                   ),
@@ -109,12 +109,12 @@ class _HomeViewState extends State<HomeView> {
               Row(
                 children: [
                   AppCard(
-                    icon: Icon(Icons.home),
+                    icon: Icon(Icons.yard),
                     title: Text('Strawberries'),
                     subtitle: Text('Needs Attention'),
                   ),
                   AppCard(
-                    icon: Icon(Icons.home),
+                    icon: Icon(Icons.yard),
                     title: Text('Tomatoes'),
                     subtitle: Text('Pending Water'),
                   ),
@@ -123,12 +123,12 @@ class _HomeViewState extends State<HomeView> {
               Row(
                 children: [
                   AppCard(
-                    icon: Icon(Icons.home),
+                    icon: Icon(Icons.yard),
                     title: Text('Strawberries'),
                     subtitle: Text('Needs Attention'),
                   ),
                   AppCard(
-                    icon: Icon(Icons.home),
+                    icon: Icon(Icons.yard),
                     title: Text('Tomatoes'),
                     subtitle: Text('Pending Water'),
                   ),
