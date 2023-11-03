@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 
+import 'services/auth/auth_service.dart';
+import 'views/auth/unauthenticated_view.dart';
 import 'views/home_view.dart';
 
 class PlantGuardApp extends StatelessWidget {
-  const PlantGuardApp({super.key});
+  final AuthService _authService;
+
+  const PlantGuardApp(this._authService, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'PlantGuard',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: const HomeView(title: 'PlantGuard'),
+      home: _authService.loggedIn
+          ? const HomeView(title: 'PlantGuard')
+          : UnauthenticatedView(_authService),
     );
   }
 }
