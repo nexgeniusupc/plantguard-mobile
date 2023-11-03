@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'card_details.dart';
 
 class PlantDetailsView extends StatefulWidget {
@@ -20,9 +17,9 @@ class _PlantDetailsViewState extends State<PlantDetailsView> {
         title: const Text('Lavander'),
         elevation: 1,
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: EdgeInsets.all(10.0),
           child: Column(
             children: [
               Text(

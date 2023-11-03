@@ -28,7 +28,7 @@ class _CardDetailsState extends State<CardDetails> {
               width: 100,
               child: Column(
                 children: <Widget>[
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   widget.icon,
@@ -39,11 +39,11 @@ class _CardDetailsState extends State<CardDetails> {
                       color: Colors.black,
                     ),
                     subtitle: widget.subtitle,
-                  )
+                  ),
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
