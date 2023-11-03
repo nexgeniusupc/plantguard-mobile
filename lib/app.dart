@@ -18,7 +18,7 @@ class PlantGuardApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: _authService.loggedIn
-          ? const HomeView(title: 'PlantGuard')
+          ? const HomeView()
           : UnauthenticatedView(_authService),
     );
   }

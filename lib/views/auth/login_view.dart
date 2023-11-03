@@ -29,7 +29,7 @@ class _LoginViewState extends State<LoginView> {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => const HomeView(title: 'PlantGuard'),
+          builder: (context) => const HomeView(),
         ),
         (route) => false,
       );
