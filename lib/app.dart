@@ -13,7 +13,7 @@ class PlantGuardApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeView(title: 'PlantGuard'),
+      home: const HomeView(),
     );
   }
 }
