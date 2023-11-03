@@ -17,9 +17,10 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
-        backgroundColor: Colors.blue[200],
+        elevation: 1,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
+       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,15 +108,49 @@ class _HomeViewState extends State<HomeView> {
               ),
             ],
           ),
+          Row(
+            children: [
+              AppCard(
+                icon: Icon(Icons.home),
+                title: Text('Strawberries'),
+                subtitle: Text('Needs Attention'),
+              ),
+              AppCard(
+                icon: Icon(Icons.home),
+                title: Text('Tomatoes'),
+                subtitle: Text('Pending Water'),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              AppCard(
+                icon: Icon(Icons.home),
+                title: Text('Strawberries'),
+                subtitle: Text('Needs Attention'),
+              ),
+              AppCard(
+                icon: Icon(Icons.home),
+                title: Text('Tomatoes'),
+                subtitle: Text('Pending Water'),
+              ),
+            ],
+          ),
         ]),
+      ),
       ),
       // esa coma del final se llama trailing o dangling comma
       // acostumbrate a ponerla siempre al final
       // el formatter te va a ayudar automáticamente
       // para activar el formatter, Shift + Alt + F
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {},
-      // ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {},
+        elevation: 1,
+        foregroundColor: Colors.black,
+        icon: const Icon(Icons.add),
+        label: const Text('Add'),
+        
+        ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {

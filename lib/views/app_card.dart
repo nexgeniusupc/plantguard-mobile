@@ -20,7 +20,7 @@ class _AppCardState extends State<AppCard> {
       children: [
         Card(
           margin: EdgeInsets.all(5.0),
-          color: Colors.blue[100],
+          borderOnForeground: true,
           child: SizedBox(
             width: 160,
             child: ListTile(
