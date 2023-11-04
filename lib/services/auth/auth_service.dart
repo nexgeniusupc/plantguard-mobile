@@ -1,33 +1,44 @@
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/auth/user.dart';
 import '../http/api_client.dart';
 
-class AuthService {
+class AuthService with ChangeNotifier {
   static const _jwtKey = 'jwt';
 
-  final ApiClient _client;
+  late ApiClient _client;
   String? _jwt;
 
-  AuthService(this._client);
+  AuthService();
 
   bool get loggedIn => _jwt != null;
 
   String? get jwt => _jwt;
 
-  Future<void> load() async {
+  set client(ApiClient client) => _client = client;
+
+  Future<void> loadJwt() async {
     final prefs = await SharedPreferences.getInstance();
-    _jwt = prefs.getString(_jwtKey);
+    final jwt = prefs.getString(_jwtKey);
+    if (jwt != null) {
+      _jwt = jwt;
+      notifyListeners();
+    }
   }
 
-  static Future<void> _save(String jwt) async {
+  Future<void> _saveJwt(String jwt) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString(_jwtKey, jwt);
+    _jwt = jwt;
+    notifyListeners();
   }
 
-  static Future<void> _remove() async {
+  Future<void> _removeJwt() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(_jwtKey);
+    _jwt = null;
+    notifyListeners();
   }
 
   Future<User> login({required String email, required String password}) async {
@@ -35,8 +46,7 @@ class AuthService {
     final response = await _client.post('/auth/login', body: request);
     final result = LoginResponse.fromJson(response);
 
-    _jwt = result.jwt;
-    await _save(result.jwt);
+    await _saveJwt(result.jwt);
 
     return result.user;
   }
@@ -59,7 +69,6 @@ class AuthService {
   }
 
   Future<void> logout() async {
-    _jwt = null;
-    await _remove();
+    await _removeJwt();
   }
 }

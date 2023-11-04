@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'services/auth/auth_service.dart';
 import 'views/auth/unauthenticated_view.dart';
 import 'views/home_view.dart';
 
 class PlantGuardApp extends StatelessWidget {
-  final AuthService _authService;
-
-  const PlantGuardApp(this._authService, {super.key});
+  const PlantGuardApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +16,15 @@ class PlantGuardApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: _authService.loggedIn
-          ? HomeView(_authService)
-          : UnauthenticatedView(_authService),
+      home: Selector<AuthService, bool>(
+        selector: (_, authService) => authService.loggedIn,
+        builder: (_, loggedIn, __) {
+          if (loggedIn) {
+            return const HomeView();
+          }
+          return const UnauthenticatedView();
+        },
+      ),
     );
   }
 }

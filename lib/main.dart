@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:provider/provider.dart';
 
 import 'app.dart';
 import 'services/auth/auth_service.dart';
 import 'services/http/api_client.dart';
+import 'services/http/authenticated_client.dart';
 import 'services/http/user_agent_client.dart';
 
 Future<void> main() async {
@@ -13,14 +14,25 @@ Future<void> main() async {
   final packageInfo = await PackageInfo.fromPlatform();
   final userAgent = '${packageInfo.appName} (v${packageInfo.version})';
 
-  Client client = UserAgentClient(userAgent);
-  ApiClient apiClient = ApiClient(
-    client,
+  final authService = AuthService();
+  final apiClient = ApiClient(
+    AuthenticatedClient(
+      authService: authService,
+      client: UserAgentClient(userAgent),
+    ),
     authority: 'localhost:8787',
     base: '/api/v1',
   );
-  AuthService authService = AuthService(apiClient);
-  await authService.load();
+  authService.client = apiClient;
+  await authService.loadJwt();
 
-  runApp(PlantGuardApp(authService));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: authService),
+        Provider.value(value: apiClient),
+      ],
+      child: const PlantGuardApp(),
+    ),
+  );
 }

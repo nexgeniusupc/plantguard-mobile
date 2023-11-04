@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../services/auth/auth_service.dart';
 import 'app_card.dart';
 import 'auth/unauthenticated_view.dart';
 import 'plant_details_view.dart';
 
 class HomeView extends StatefulWidget {
-  final AuthService _authService;
-
-  const HomeView(this._authService, {super.key});
+  const HomeView({super.key});
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -15,6 +14,20 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   int currentPageIndex = 0;
+
+  Future<void> handleLogout(BuildContext context) async {
+    final authService = context.read<AuthService>();
+    await authService.logout();
+    if (!mounted) return;
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const UnauthenticatedView(),
+      ),
+      (route) => false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,19 +35,7 @@ class _HomeViewState extends State<HomeView> {
         title: const Text('Home'),
         actions: [
           IconButton(
-            onPressed: () async {
-              await widget._authService.logout();
-              if (!mounted) return;
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => UnauthenticatedView(
-                    widget._authService,
-                  ),
-                ),
-                (route) => false,
-              );
-            },
+            onPressed: () => handleLogout(context),
             icon: const Icon(Icons.logout),
           ),
         ],
