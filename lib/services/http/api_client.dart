@@ -87,52 +87,66 @@ class ApiClient {
     String method,
     String path,
     HttpHeaders? headers, [
+    Map<String, String>? query,
     Object? body,
     Encoding? encoding,
   ]) async {
-    final url = _resolveBaseUri(base, path);
+    Uri url = _resolveBaseUri(base, path);
+    if (query != null) url = url.replace(queryParameters: query);
     final request = _createRequest(method, url, headers, body, encoding);
     final response = await Response.fromStream(await _client.send(request));
     return _parseResponse(response);
   }
 
-  Future<dynamic> head(String path, {HttpHeaders? headers}) =>
+  Future<dynamic> head(
+    String path, {
+    HttpHeaders? headers,
+    Map<String, String>? query,
+  }) =>
       _send('HEAD', path, headers);
 
-  Future<dynamic> get(String path, {HttpHeaders? headers}) =>
-      _send('GET', path, headers);
+  Future<dynamic> get(
+    String path, {
+    HttpHeaders? headers,
+    Map<String, String>? query,
+  }) =>
+      _send('GET', path, headers, query);
 
   Future<dynamic> post(
     String path, {
     HttpHeaders? headers,
+    Map<String, String>? query,
     Object? body,
     Encoding? encoding,
   }) =>
-      _send('POST', path, headers, body, encoding);
+      _send('POST', path, headers, query, body, encoding);
 
   Future<dynamic> put(
     String path, {
     HttpHeaders? headers,
+    Map<String, String>? query,
     Object? body,
     Encoding? encoding,
   }) =>
-      _send('PUT', path, headers, body, encoding);
+      _send('PUT', path, headers, query, body, encoding);
 
   Future<dynamic> patch(
     String path, {
     HttpHeaders? headers,
+    Map<String, String>? query,
     Object? body,
     Encoding? encoding,
   }) =>
-      _send('PATCH', path, headers, body, encoding);
+      _send('PATCH', path, headers, query, body, encoding);
 
   Future<dynamic> delete(
     String path, {
     HttpHeaders? headers,
+    Map<String, String>? query,
     Object? body,
     Encoding? encoding,
   }) =>
-      _send('DELETE', path, headers, body, encoding);
+      _send('DELETE', path, headers, query, body, encoding);
 
   void close() => _client.close();
 }
