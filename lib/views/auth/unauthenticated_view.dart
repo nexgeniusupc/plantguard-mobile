@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../services/auth/auth_service.dart';
 import 'login_view.dart';
 import 'register_view.dart';
 
 class UnauthenticatedView extends StatelessWidget {
-  final AuthService _authService;
-
-  const UnauthenticatedView(this._authService, {super.key});
+  const UnauthenticatedView({super.key});
 
   void handleRegisterButton(BuildContext context) {
     final route = MaterialPageRoute(
-      builder: (context) => RegisterView(_authService),
+      builder: (context) => const RegisterView(),
     );
     Navigator.push(context, route);
   }
 
   void handleLoginButton(BuildContext context) {
     final route = MaterialPageRoute(
-      builder: (context) => LoginView(_authService),
+      builder: (context) => const LoginView(),
     );
     Navigator.push(context, route);
   }

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../services/auth/auth_service.dart';
 import '../home_view.dart';
 
 class LoginView extends StatefulWidget {
-  final AuthService _authService;
-
-  const LoginView(this._authService, {super.key});
+  const LoginView({super.key});
 
   @override
   State<LoginView> createState() => _LoginViewState();
@@ -18,18 +17,19 @@ class _LoginViewState extends State<LoginView> {
   String email = '';
   String password = '';
 
-  Future<void> handleSubmit() async {
+  Future<void> handleSubmit(BuildContext context) async {
     final formState = _formKey.currentState;
     if (formState == null) return;
     if (formState.validate()) {
       formState.save();
       // TODO: Add error handling
-      await widget._authService.login(email: email, password: password);
+      final authService = context.read<AuthService>();
+      await authService.login(email: email, password: password);
       if (!mounted) return;
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => HomeView(widget._authService),
+          builder: (context) => const HomeView(),
         ),
         (route) => false,
       );
@@ -84,7 +84,7 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     SizedBox.fromSize(size: const Size.fromHeight(16.0)),
                     FilledButton(
-                      onPressed: handleSubmit,
+                      onPressed: () => handleSubmit(context),
                       child: const Text('Log in'),
                     ),
                   ],

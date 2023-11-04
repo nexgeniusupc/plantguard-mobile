@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../services/auth/auth_service.dart';
 import 'login_view.dart';
 
 class RegisterView extends StatefulWidget {
-  final AuthService _authService;
-
-  const RegisterView(this._authService, {super.key});
+  const RegisterView({super.key});
 
   @override
   State<RegisterView> createState() => _RegisterViewState();
@@ -20,13 +19,14 @@ class _RegisterViewState extends State<RegisterView> {
   String email = '';
   String password = '';
 
-  Future<void> handleSubmit() async {
+  Future<void> handleSubmit(BuildContext context) async {
     final formState = _formKey.currentState;
     if (formState == null) return;
     if (formState.validate()) {
       formState.save();
+      final authService = context.read<AuthService>();
       // TODO: Add error handling
-      await widget._authService.register(
+      await authService.register(
         email: email,
         password: password,
         fullName: fullName,
@@ -36,7 +36,7 @@ class _RegisterViewState extends State<RegisterView> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => LoginView(widget._authService),
+          builder: (context) => const LoginView(),
         ),
       );
     }
@@ -138,7 +138,7 @@ class _RegisterViewState extends State<RegisterView> {
                     ),
                     SizedBox.fromSize(size: const Size.fromHeight(16.0)),
                     FilledButton(
-                      onPressed: handleSubmit,
+                      onPressed: () => handleSubmit(context),
                       child: const Text('Register'),
                     ),
                   ],
