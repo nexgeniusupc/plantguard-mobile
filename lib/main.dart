@@ -7,6 +7,7 @@ import 'services/auth/auth_service.dart';
 import 'services/http/api_client.dart';
 import 'services/http/authenticated_client.dart';
 import 'services/http/user_agent_client.dart';
+import 'services/pairing/pairing_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,11 +27,14 @@ Future<void> main() async {
   authService.client = apiClient;
   await authService.loadJwt();
 
+  final pairingService = PairingService(apiClient);
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: authService),
         Provider.value(value: apiClient),
+        Provider.value(value: pairingService),
       ],
       child: const PlantGuardApp(),
     ),

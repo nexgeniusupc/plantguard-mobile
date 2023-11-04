@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../services/auth/auth_service.dart';
 import 'app_card.dart';
 import 'auth/unauthenticated_view.dart';
+import 'pairing/add_device_view.dart';
 import 'plant_details_view.dart';
 
 class HomeView extends StatefulWidget {
@@ -25,6 +26,15 @@ class _HomeViewState extends State<HomeView> {
         builder: (context) => const UnauthenticatedView(),
       ),
       (route) => false,
+    );
+  }
+
+  Future<void> handleAdd(BuildContext context) async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AddDeviceView(),
+      ),
     );
   }
 
@@ -144,8 +154,7 @@ class _HomeViewState extends State<HomeView> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        elevation: 1,
+        onPressed: () => handleAdd(context),
         foregroundColor: Colors.black,
         icon: const Icon(Icons.add),
         label: const Text('Add'),
