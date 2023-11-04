@@ -59,7 +59,7 @@ class _ConfirmDeviceViewState extends State<ConfirmDeviceView> {
                   border: OutlineInputBorder(),
                   label: Text('Name'),
                 ),
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.text,
                 validator: (value) {
                   if (value == null || value.isEmpty) return 'Required';
                   if (value.length > 50) return 'Max 50 characters';
