@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../services/auth/auth_service.dart';
 import 'app_card.dart';
 import 'auth/unauthenticated_view.dart';
+import 'plant_details_view.dart';
 
 class HomeView extends StatefulWidget {
   final AuthService _authService;
@@ -38,13 +39,13 @@ class _HomeViewState extends State<HomeView> {
           ),
         ],
       ),
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
+              const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
                   'Bedroom',
@@ -53,12 +54,22 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
               ),
-              AppCard(
-                icon: Icon(Icons.yard),
-                title: Text('Lavander'),
-                subtitle: Text('Healthy'),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PlantDetailsView(),
+                    ),
+                  );
+                },
+                child: const AppCard(
+                  icon: Icon(Icons.yard),
+                  title: Text('Lavander'),
+                  subtitle: Text('Healthy'),
+                ),
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
                   'Living Room',
@@ -67,7 +78,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
               ),
-              Row(
+              const Row(
                 children: [
                   AppCard(
                     icon: Icon(Icons.yard),
@@ -81,7 +92,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ],
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
                   'Main Garden',
@@ -90,7 +101,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
               ),
-              Row(
+              const Row(
                 children: [
                   AppCard(
                     icon: Icon(Icons.yard),
@@ -104,7 +115,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ],
               ),
-              Row(
+              const Row(
                 children: [
                   AppCard(
                     icon: Icon(Icons.yard),
@@ -118,40 +129,12 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ],
               ),
-              Row(
+              const Row(
                 children: [
                   AppCard(
                     icon: Icon(Icons.yard),
                     title: Text('Lavander'),
                     subtitle: Text('Water in 30 min'),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  AppCard(
-                    icon: Icon(Icons.yard),
-                    title: Text('Strawberries'),
-                    subtitle: Text('Needs Attention'),
-                  ),
-                  AppCard(
-                    icon: Icon(Icons.yard),
-                    title: Text('Tomatoes'),
-                    subtitle: Text('Pending Water'),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  AppCard(
-                    icon: Icon(Icons.yard),
-                    title: Text('Strawberries'),
-                    subtitle: Text('Needs Attention'),
-                  ),
-                  AppCard(
-                    icon: Icon(Icons.yard),
-                    title: Text('Tomatoes'),
-                    subtitle: Text('Pending Water'),
                   ),
                 ],
               ),
