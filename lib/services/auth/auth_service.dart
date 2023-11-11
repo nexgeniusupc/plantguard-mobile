@@ -5,48 +5,57 @@ import '../../models/auth/user.dart';
 import '../http/api_client.dart';
 
 class AuthService with ChangeNotifier {
-  static const _jwtKey = 'jwt';
+  static const _tokenKey = 'auth:token';
 
   late ApiClient _client;
-  String? _jwt;
+  bool initialized = false;
+  String? _token;
 
   AuthService();
 
-  bool get loggedIn => _jwt != null;
+  bool get isLoggedIn => _token != null;
 
-  String? get jwt => _jwt;
+  String? get token => _token;
 
-  set client(ApiClient client) => _client = client;
+  Future<void> init(ApiClient client) async {
+    assert(!initialized, 'AuthService has already been initialized');
+    await _loadToken();
+    _client = client;
+    initialized = true;
+  }
 
-  Future<void> loadJwt() async {
+  void _updateToken(String? token) {
+    _token = token;
+    notifyListeners();
+  }
+
+  Future<void> _loadToken() async {
     final prefs = await SharedPreferences.getInstance();
-    final jwt = prefs.getString(_jwtKey);
-    if (jwt != null) {
-      _jwt = jwt;
-      notifyListeners();
+    final token = prefs.getString(_tokenKey);
+    if (token != null) {
+      _updateToken(token);
     }
   }
 
-  Future<void> _saveJwt(String jwt) async {
+  Future<void> _saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString(_jwtKey, jwt);
-    _jwt = jwt;
-    notifyListeners();
+    await prefs.setString(_tokenKey, token);
+    _updateToken(token);
   }
 
-  Future<void> _removeJwt() async {
+  Future<void> _removeToken() async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.remove(_jwtKey);
-    _jwt = null;
-    notifyListeners();
+    await prefs.remove(_tokenKey);
+    _updateToken(null);
   }
 
   Future<User> login({required String email, required String password}) async {
+    assert(initialized, "AuthService hasn't been initialized yet");
     final request = LoginRequest(email: email, password: password);
     final response = await _client.post('/auth/login', body: request);
     final result = LoginResponse.fromJson(response);
 
-    await _saveJwt(result.jwt);
+    await _saveToken(result.jwt);
 
     return result.user;
   }
@@ -57,6 +66,7 @@ class AuthService with ChangeNotifier {
     required String fullName,
     required String preferredName,
   }) async {
+    assert(initialized, "AuthService hasn't been initialized yet");
     final request = RegisterRequest(
       fullName: fullName,
       preferredName: preferredName,
@@ -69,6 +79,6 @@ class AuthService with ChangeNotifier {
   }
 
   Future<void> logout() async {
-    await _removeJwt();
+    await _removeToken();
   }
 }

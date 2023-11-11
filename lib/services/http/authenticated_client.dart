@@ -15,9 +15,9 @@ class AuthenticatedClient extends BaseClient {
 
   @override
   Future<StreamedResponse> send(BaseRequest request) {
-    if (_authService.loggedIn) {
-      final jwt = _authService.jwt;
-      request.headers[HttpHeaders.authorization] = 'Bearer $jwt';
+    if (_authService.isLoggedIn) {
+      final token = _authService.token;
+      request.headers[HttpHeaders.authorization] = 'Bearer $token';
     }
     return _inner.send(request);
   }

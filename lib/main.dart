@@ -9,9 +9,12 @@ import 'services/http/api_client.dart';
 import 'services/http/authenticated_client.dart';
 import 'services/http/user_agent_client.dart';
 import 'services/pairing/pairing_service.dart';
+import 'utils/deprecated_keys_migrator.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await migrateDeprecatedKeys();
 
   final packageInfo = await PackageInfo.fromPlatform();
   final userAgent = '${packageInfo.appName} (v${packageInfo.version})';
@@ -25,8 +28,7 @@ Future<void> main() async {
     authority: env.apiAuthority,
     base: env.apiBase,
   );
-  authService.client = apiClient;
-  await authService.loadJwt();
+  await authService.init(apiClient);
 
   final pairingService = PairingService(apiClient);
 
