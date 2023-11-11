@@ -3,6 +3,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
 import 'app.dart';
+import 'env.dart' as env;
 import 'services/auth/auth_service.dart';
 import 'services/http/api_client.dart';
 import 'services/http/authenticated_client.dart';
@@ -21,8 +22,8 @@ Future<void> main() async {
       authService: authService,
       client: UserAgentClient(userAgent),
     ),
-    authority: 'localhost:8787',
-    base: '/api/v1',
+    authority: env.apiAuthority,
+    base: env.apiBase,
   );
   authService.client = apiClient;
   await authService.loadJwt();
