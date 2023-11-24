@@ -13,7 +13,23 @@ class PlantGuardApp extends StatelessWidget {
     return MaterialApp(
       title: 'PlantGuard',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.green,
+          brightness: Brightness.light,
+        ),
+        textTheme: Typography.blackMountainView,
+        appBarTheme: AppBarTheme(
+          titleTextStyle: Typography.blackMountainView.titleMedium?.copyWith(
+            fontSize: 24.0,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        cardTheme: const CardTheme(
+          margin: EdgeInsets.all(0),
+        ),
+        listTileTheme: const ListTileThemeData(
+          textColor: Colors.black,
+        ),
         useMaterial3: true,
       ),
       home: Selector<AuthService, bool>(

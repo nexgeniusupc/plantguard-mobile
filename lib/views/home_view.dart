@@ -67,13 +67,19 @@ class _HomeViewState extends State<HomeView> {
           children: [
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: Text('Bedroom', style: TextStyle(fontSize: 16.0)),
+              child: Text(
+                'Bedroom',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
             ),
             Expanded(
               child: AlignedGridView.count(
                 crossAxisCount: 2,
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8,
+                crossAxisSpacing: 8.0,
+                mainAxisSpacing: 8.0,
                 itemCount: 7,
                 itemBuilder: (context, index) => GestureDetector(
                   onTap: () => handleDetail(),
@@ -90,7 +96,6 @@ class _HomeViewState extends State<HomeView> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => handleAdd(context),
-        foregroundColor: Colors.black,
         icon: const Icon(Icons.add),
         label: const Text('Add'),
       ),

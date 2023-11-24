@@ -15,15 +15,18 @@ class AppCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.all(0),
       child: ListTile(
         leading: icon,
         title: title,
-        titleTextStyle: const TextStyle(
-          fontSize: 14,
-          color: Colors.black,
-        ),
         subtitle: subtitle,
+        titleTextStyle: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+        ),
+        subtitleTextStyle: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w300,
+        ),
       ),
     );
   }
