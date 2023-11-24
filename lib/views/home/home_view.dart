@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
+import '../../models/device/device.dart';
 import '../../services/auth/auth_service.dart';
+import '../../services/devices/devices_service.dart';
 import 'home_card.dart';
 import '../auth/unauthenticated_view.dart';
 import '../pairing/add_device_view.dart';
@@ -15,9 +17,18 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  late DevicesService _devicesService;
+  late Future<List<DeviceListResponseData>> _devices;
   int currentPageIndex = 0;
 
-  Future<void> handleLogout(BuildContext context) async {
+  @override
+  void initState() {
+    super.initState();
+    _devicesService = context.read<DevicesService>();
+    _devices = _devicesService.getAll();
+  }
+
+  Future<void> handleLogout() async {
     final authService = context.read<AuthService>();
     await authService.logout();
     if (!mounted) return;
@@ -30,16 +41,16 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  void handleDetail() {
+  void handleDetail(DeviceListResponseData device) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const PlantDetailsView(),
+        builder: (context) => PlantDetailsView(device: device),
       ),
     );
   }
 
-  Future<void> handleAdd(BuildContext context) async {
+  Future<void> handleAdd() async {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -55,7 +66,7 @@ class _HomeViewState extends State<HomeView> {
         title: const Text('Home'),
         actions: [
           IconButton(
-            onPressed: () => handleLogout(context),
+            onPressed: handleLogout,
             icon: const Icon(Icons.logout),
           ),
         ],
@@ -76,26 +87,46 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
             Expanded(
-              child: AlignedGridView.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 8.0,
-                mainAxisSpacing: 8.0,
-                itemCount: 7,
-                itemBuilder: (context, index) => GestureDetector(
-                  onTap: () => handleDetail(),
-                  child: HomeCard(
-                    icon: const Icon(Icons.yard),
-                    title: Text('Item $index'),
-                    subtitle: const Text('Healthy'),
-                  ),
-                ),
+              child: FutureBuilder(
+                future: _devices,
+                initialData: null,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState != ConnectionState.done) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  if (snapshot.hasError || !snapshot.hasData) {
+                    return const Center(
+                      child: Text(
+                        'An error has occurred, please try again later.',
+                      ),
+                    );
+                  }
+
+                  final devices = snapshot.data!;
+
+                  return AlignedGridView.count(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 8.0,
+                    mainAxisSpacing: 8.0,
+                    itemCount: devices.length,
+                    itemBuilder: (context, index) => GestureDetector(
+                      onTap: () => handleDetail(devices[index]),
+                      child: HomeCard(
+                        icon: const Icon(Icons.yard),
+                        title: Text(devices[index].name),
+                        subtitle: const Text('Healthy'),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => handleAdd(context),
+        onPressed: handleAdd,
         icon: const Icon(Icons.add),
         label: const Text('Add'),
       ),
@@ -105,7 +136,6 @@ class _HomeViewState extends State<HomeView> {
             currentPageIndex = index;
           });
         },
-        indicatorColor: Colors.blue[300],
         selectedIndex: currentPageIndex,
         destinations: const <Widget>[
           NavigationDestination(

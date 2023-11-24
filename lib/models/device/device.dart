@@ -24,3 +24,37 @@ class Device {
 
   Map<String, dynamic> toJson() => _$DeviceToJson(this);
 }
+
+@JsonSerializable()
+class DeviceListResponseData {
+  final String id;
+  final String name;
+
+  DeviceListResponseData({
+    required this.id,
+    required this.name,
+  });
+
+  factory DeviceListResponseData.fromJson(Map<String, dynamic> json) =>
+      _$DeviceListResponseDataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DeviceListResponseDataToJson(this);
+}
+
+@JsonSerializable()
+class DeviceMeasurement {
+  final double temperature;
+  final double humidity;
+  final DateTime date;
+
+  DeviceMeasurement({
+    required this.temperature,
+    required this.humidity,
+    required this.date,
+  });
+
+  factory DeviceMeasurement.fromJson(Map<String, dynamic> json) =>
+      _$DeviceMeasurementFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DeviceMeasurementToJson(this);
+}
