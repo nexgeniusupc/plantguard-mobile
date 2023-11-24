@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import '../services/auth/auth_service.dart';
 import 'app_card.dart';
@@ -29,6 +30,15 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
+  void handleDetail() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const PlantDetailsView(),
+      ),
+    );
+  }
+
   Future<void> handleAdd(BuildContext context) async {
     Navigator.push(
       context,
@@ -50,107 +60,32 @@ class _HomeViewState extends State<HomeView> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'Bedroom',
-                  style: TextStyle(
-                    fontSize: 23,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 16.0),
+              child: Text('Bedroom', style: TextStyle(fontSize: 16.0)),
+            ),
+            Expanded(
+              child: AlignedGridView.count(
+                crossAxisCount: 2,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
+                itemCount: 7,
+                itemBuilder: (context, index) => GestureDetector(
+                  onTap: () => handleDetail(),
+                  child: AppCard(
+                    icon: const Icon(Icons.yard),
+                    title: Text('Item $index'),
+                    subtitle: const Text('Healthy'),
                   ),
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const PlantDetailsView(),
-                    ),
-                  );
-                },
-                child: const AppCard(
-                  icon: Icon(Icons.yard),
-                  title: Text('Lavander'),
-                  subtitle: Text('Healthy'),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'Living Room',
-                  style: TextStyle(
-                    fontSize: 23,
-                  ),
-                ),
-              ),
-              const Row(
-                children: [
-                  AppCard(
-                    icon: Icon(Icons.yard),
-                    title: Text('Roses'),
-                    subtitle: Text('Pending Water'),
-                  ),
-                  AppCard(
-                    icon: Icon(Icons.yard),
-                    title: Text('Lavatera'),
-                    subtitle: Text('Healthy'),
-                  ),
-                ],
-              ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'Main Garden',
-                  style: TextStyle(
-                    fontSize: 23,
-                  ),
-                ),
-              ),
-              const Row(
-                children: [
-                  AppCard(
-                    icon: Icon(Icons.yard),
-                    title: Text('Lemongrass'),
-                    subtitle: Text('Pending Water'),
-                  ),
-                  AppCard(
-                    icon: Icon(Icons.yard),
-                    title: Text('Roses'),
-                    subtitle: Text('Water in 1 hour'),
-                  ),
-                ],
-              ),
-              const Row(
-                children: [
-                  AppCard(
-                    icon: Icon(Icons.yard),
-                    title: Text('Strawberries'),
-                    subtitle: Text('Needs Attention'),
-                  ),
-                  AppCard(
-                    icon: Icon(Icons.yard),
-                    title: Text('Tomatoes'),
-                    subtitle: Text('Pending Water'),
-                  ),
-                ],
-              ),
-              const Row(
-                children: [
-                  AppCard(
-                    icon: Icon(Icons.yard),
-                    title: Text('Lavander'),
-                    subtitle: Text('Water in 30 min'),
-                  ),
-                ],
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(

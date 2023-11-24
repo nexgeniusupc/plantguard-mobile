@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppCard extends StatefulWidget {
+class AppCard extends StatelessWidget {
   final Icon icon;
   final Text title;
   final Text subtitle;
@@ -13,31 +13,18 @@ class AppCard extends StatefulWidget {
   });
 
   @override
-  State<AppCard> createState() => _AppCardState();
-}
-
-class _AppCardState extends State<AppCard> {
-  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Card(
-          margin: const EdgeInsets.all(5.0),
-          borderOnForeground: true,
-          child: SizedBox(
-            width: 160,
-            child: ListTile(
-              leading: widget.icon,
-              title: widget.title,
-              titleTextStyle: const TextStyle(
-                fontSize: 14,
-                color: Colors.black,
-              ),
-              subtitle: widget.subtitle,
-            ),
-          ),
+    return Card(
+      margin: const EdgeInsets.all(0),
+      child: ListTile(
+        leading: icon,
+        title: title,
+        titleTextStyle: const TextStyle(
+          fontSize: 14,
+          color: Colors.black,
         ),
-      ],
+        subtitle: subtitle,
+      ),
     );
   }
 }
