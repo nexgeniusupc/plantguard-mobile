@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'app.dart';
 import 'env.dart' as env;
 import 'services/auth/auth_service.dart';
+import 'services/auth/users_service.dart';
+import 'services/devices/devices_service.dart';
 import 'services/http/api_client.dart';
 import 'services/http/authenticated_client.dart';
 import 'services/http/user_agent_client.dart';
@@ -28,9 +30,12 @@ Future<void> main() async {
     authority: env.apiAuthority,
     base: env.apiBase,
   );
-  await authService.init(apiClient);
-
   final pairingService = PairingService(apiClient);
+  final usersService = UsersService(apiClient, authService);
+  final devicesService = DevicesService(apiClient);
+
+  await authService.init(apiClient);
+  await usersService.refresh();
 
   runApp(
     MultiProvider(
@@ -38,6 +43,8 @@ Future<void> main() async {
         ChangeNotifierProvider.value(value: authService),
         Provider.value(value: apiClient),
         Provider.value(value: pairingService),
+        Provider.value(value: usersService),
+        Provider.value(value: devicesService),
       ],
       child: const PlantGuardApp(),
     ),
