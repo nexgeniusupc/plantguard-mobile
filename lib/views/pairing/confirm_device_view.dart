@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../models/device/pairing.dart';
 import '../../services/pairing/pairing_service.dart';
-import '../home_view.dart';
+import '../home/home_view.dart';
 
 class ConfirmDeviceView extends StatefulWidget {
   final DevicePairFindResponse response;

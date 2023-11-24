@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
-import '../services/auth/auth_service.dart';
-import 'app_card.dart';
-import 'auth/unauthenticated_view.dart';
-import 'pairing/add_device_view.dart';
-import 'plant_details_view.dart';
+import '../../services/auth/auth_service.dart';
+import 'home_card.dart';
+import '../auth/unauthenticated_view.dart';
+import '../pairing/add_device_view.dart';
+import '../details/plant_details_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -83,7 +83,7 @@ class _HomeViewState extends State<HomeView> {
                 itemCount: 7,
                 itemBuilder: (context, index) => GestureDetector(
                   onTap: () => handleDetail(),
-                  child: AppCard(
+                  child: HomeCard(
                     icon: const Icon(Icons.yard),
                     title: Text('Item $index'),
                     subtitle: const Text('Healthy'),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class CardDetails extends StatelessWidget {
+class PlantDetailsCard extends StatelessWidget {
   final Icon icon;
   final Text title;
   final Text subtitle;
 
-  const CardDetails({
+  const PlantDetailsCard({
     super.key,
     required this.icon,
     required this.title,

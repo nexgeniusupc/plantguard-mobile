@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class AppCard extends StatelessWidget {
+class HomeCard extends StatelessWidget {
   final Icon icon;
   final Text title;
   final Text subtitle;
 
-  const AppCard({
+  const HomeCard({
     super.key,
     required this.icon,
     required this.title,

@@ -1,67 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'card_details.dart';
+import 'plant_details_card.dart';
 
 class PlantDetailsView extends StatelessWidget {
   const PlantDetailsView({super.key});
 
   static const List<Widget> items = [
-    CardDetails(
+    PlantDetailsCard(
       icon: Icon(Icons.yard),
       title: Text('Temperature'),
       subtitle: Text('Healthy ⋅ 25°C'),
     ),
-    CardDetails(
+    PlantDetailsCard(
       icon: Icon(Icons.yard),
       title: Text('Humidity'),
       subtitle: Text('Healthy ⋅ 60%'),
     ),
-    CardDetails(
+    PlantDetailsCard(
       icon: Icon(Icons.yard),
       title: Text('Light Intensity'),
       subtitle: Text('Healthy ⋅ 5,000 lux'),
     ),
-    CardDetails(
+    PlantDetailsCard(
       icon: Icon(Icons.yard),
       title: Text('Soil Moisture'),
       subtitle: Text('Healthy ⋅ 40%'),
     ),
-    CardDetails(
+    PlantDetailsCard(
       icon: Icon(Icons.yard),
       title: Text('Soil pH'),
       subtitle: Text('Healthy ⋅ 6.5pH'),
     ),
-    CardDetails(
+    PlantDetailsCard(
       icon: Icon(Icons.yard),
       title: Text('Nutrient Levels'),
       subtitle: Text('Healthy'),
     ),
-    CardDetails(
+    PlantDetailsCard(
       icon: Icon(Icons.yard),
       title: Text('CO2 Levels'),
       subtitle: Text('Healthy ⋅ 400ppm'),
     ),
-    CardDetails(
+    PlantDetailsCard(
       icon: Icon(Icons.yard),
       title: Text('Air Quality'),
       subtitle: Text('Healthy ⋅ 94%'),
     ),
-    CardDetails(
+    PlantDetailsCard(
       icon: Icon(Icons.yard),
       title: Text('Water pH'),
       subtitle: Text('Healthy ⋅ 7.0 pH'),
     ),
-    CardDetails(
+    PlantDetailsCard(
       icon: Icon(Icons.yard),
       title: Text('Rainfall'),
       subtitle: Text('No rain detected'),
     ),
-    CardDetails(
+    PlantDetailsCard(
       icon: Icon(Icons.yard),
       title: Text('Wind Speed'),
       subtitle: Text('Healthy ⋅ 10 km/h'),
     ),
-    CardDetails(
+    PlantDetailsCard(
       icon: Icon(Icons.yard),
       title: Text('Pest Control'),
       subtitle: Text('Healthy'),

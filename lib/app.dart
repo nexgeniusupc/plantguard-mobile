@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'services/auth/auth_service.dart';
 import 'views/auth/unauthenticated_view.dart';
-import 'views/home_view.dart';
+import 'views/home/home_view.dart';
 
 class PlantGuardApp extends StatelessWidget {
   const PlantGuardApp({super.key});
